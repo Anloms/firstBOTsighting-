@@ -1,8 +1,6 @@
 interface SessionData {
   route: string
-
-  leftOperand: number
-  rightOperand: number
+  addressToken: string
 }
 
 export { SessionData }

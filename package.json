@@ -2,12 +2,11 @@
   "devDependencies": {
     "@types/node": "^22.10.1",
     "@types/pg": "^8.11.10",
+    "prisma": "^6.0.1",
     "typescript": "^5.7.2"
   },
   "scripts": {
-    "start": "npx tsc && node dist/bot.js",
-    "start2": "npx tsc -p tsconfig.two.json && node srcTwo/botTwo.js",
-    "start3": "npx tsc -p tsconfig.three.json && node distThree/botThree.js"
+    "start": "npx tsc && node dist/bot.js"
   },
   "dependencies": {
     "@grammyjs/conversations": "^1.2.0",
@@ -16,6 +15,7 @@
     "@grammyjs/router": "^2.0.0",
     "@grammyjs/runner": "^2.0.3",
     "@grammyjs/transformer-throttler": "^1.2.1",
+    "@prisma/client": "^6.0.1",
     "dotenv": "^16.4.7",
     "grammy": "^1.32.0",
     "pg": "^8.13.1"
