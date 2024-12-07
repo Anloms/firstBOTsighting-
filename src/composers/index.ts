@@ -5,13 +5,21 @@ const composer = new Composer<CustomContext>()
 
 composer.command('start', async ctx => {
    await ctx.reply(
-    "Welcome! if you would like to track a single token type: /addWallet"
-  )})
+    "Welcome! if you would like to join: /joinFly or, if you have an account /addWallet"
+  )
+  
+})
+composer.command('joinFly', async (ctx, next) => {
+    ctx.session.route = 'join'
+    ctx.session.addressToken = ""
+    await ctx.reply('great! Now you can /addWallet')
+})
 composer.command('addWallet', async ctx => {
     ctx.session.route = 'add'
     ctx.session.addressToken = ""
-    await ctx.reply('Send the address token in double quotes ("")')
+    await ctx.reply('Paste the address token')
 })
+
 // composer.command('addMultiple', async ctx => {
 //     ctx.session.route = 'addMore'
 //     ctx.session.addressToken = ""

@@ -1,38 +1,50 @@
 
 import prisma from '../../prisma/prismaClient.js';
 
+
 export async function createUser(telegramId: string) {
-   await prisma.user.create({
+  const created =  await prisma.user.create({
     data: {
       telegramId: telegramId,
     },
   });
-  return
+  console.log("user created")
+  return created
 }
 
 export async function userExists(telegramId: string) {
    const value = await prisma.user.findUnique({
-    where: { telegramId },
+    where: { telegramId }
   });
   return value
 
 }
 export async function walletAlreadyTracked(accountAddress:string, telegramId:string){
-  const value = await prisma.wallet.findUnique({
-    where: {
-      id: telegramId,
-      accountAddress: accountAddress
-    }
-  })
-  return value
+  const user = await prisma.user.findUnique({
+    where: { telegramId }
+  });
+  if(user){
+    console.log("======>", user)
+    const value = await prisma.wallet.findUnique({
+      where: {
+        id: user.id,
+        accountAddress: accountAddress
+      }
+    })
+    console.log("value in walletAlreadyExists Prisma method", value)
+    return value
+  } else{
+    console.log("user needs to be investigated", user)
+    throw new Error("user error in walletAlreadyTracked method")
+  }
 }
-export async function addWalletToTrack(accountAddress: string, telegramId: string){
+export async function addWalletToTrack(accountAddress: string, telegramId: string):Promise<null|void>{
   const alreadyTracked = await walletAlreadyTracked(accountAddress, telegramId)
   if(alreadyTracked) {
-    return "already tracked"
+    return null;
   } else {
     const user = await prisma.user.findUnique({where: {
-      id: telegramId,
+      telegramId: telegramId,
     }})
     if(!user) {
       throw new Error("User not found")

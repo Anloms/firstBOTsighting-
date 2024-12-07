@@ -3,8 +3,9 @@ import { apiThrottler } from '@grammyjs/transformer-throttler'
 import { Bot, session } from 'grammy'
 import { composer } from './composers'
 
+import { router as joinFly } from './routers/joinFly';
 import { router as addAddress } from './routers/addAddress';
-import { router as addMultiple} from './routers/addMultiple';
+
 
 import type { CustomContext } from './types/CustomContext';
 import type { SessionData } from './types/SessionData';
@@ -27,9 +28,8 @@ bot.use(
     })
 )
 
-
+bot.use(joinFly)
 bot.use(addAddress)
-bot.use(addMultiple)
 
 bot.use(composer)
 
